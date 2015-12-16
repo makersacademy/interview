@@ -2,7 +2,9 @@ require 'opal'
 require 'opal-parser'
 require 'opal-jquery'
 
-DEFAULT_TRY_CODE = <<-RUBY
+DEFAULT_TRY_CODE = '# your code here'
+
+DEFAULT_TRY_CODE_OLD = <<-RUBY
 class User
   attr_accessor :name
 
@@ -92,6 +94,8 @@ end
 Document.ready? do
   $stdout.write_proc = $stderr.write_proc = proc do |str|
     TryOpal.instance.print_to_output(str)
+    ycbm = Element.find('#youcanbookme')
+    ycbm.css('display', str.include?('john') ? 'block' : 'none') 
   end
   TryOpal.instance.run_code
 end
