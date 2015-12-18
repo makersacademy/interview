@@ -9,7 +9,7 @@ puts "Hello \#{random_name}"
 
   def code
     <<-TEST
-#{Stage2.new.code}
+#{Stage3.new.code}
 puts "Hello \#{random_name}"
 
 result = 1.upto(100).inject([]) do |memo, number|

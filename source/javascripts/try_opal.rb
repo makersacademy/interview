@@ -7,8 +7,8 @@ require_relative 'stage_1'
 require_relative 'stage_2'
 require_relative 'stage_3'
 require_relative 'stage_4'
-# require_relative 'stage_5'
-# require_relative 'stage_6'
+require_relative 'stage_5'
+require_relative 'stage_6'
 
 class TryOpal
   class Editor
@@ -52,9 +52,11 @@ class TryOpal
   end
 
   def begin_stage(stage)
-    @viewer.value = stage.display_code
-    Element.find('#instructions').html(stage.instructions)
-    @stage = stage
+    if stage
+      @viewer.value = stage.display_code
+      Element.find('#instructions').html(stage.instructions)
+      @stage = stage
+    end
   end
 
   def run_code
@@ -93,8 +95,6 @@ end
 Document.ready? do
   $stdout.write_proc = $stderr.write_proc = proc do |str|
     TryOpal.instance.print_to_output(str)
-    ycbm = Element.find('#youcanbookme')
-    ycbm.css('display', str.include?('john') ? 'block' : 'none')
   end
   TryOpal.instance
 end
