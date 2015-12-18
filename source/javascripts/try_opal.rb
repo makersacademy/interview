@@ -5,6 +5,7 @@ require 'opal-jquery'
 require_relative 'default_try_code'
 require_relative 'stage_1'
 require_relative 'stage_2'
+require_relative 'stage_3'
 
 class TryOpal
   class Editor
@@ -43,6 +44,7 @@ class TryOpal
 
   def begin_stage(stage)
     @viewer.value = stage.display_code
+    Element.find('#instructions').html(stage.instructions)
     @stage = stage
   end
 

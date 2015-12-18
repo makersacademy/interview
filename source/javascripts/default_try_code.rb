@@ -17,5 +17,7 @@
 # RUBY
 
 DEFAULT_TRY_CODE = <<-RUBY
-puts "Hello \#{name}"
+# your code here
+
+
 RUBY
