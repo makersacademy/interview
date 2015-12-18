@@ -6,6 +6,9 @@ require_relative 'default_try_code'
 require_relative 'stage_1'
 require_relative 'stage_2'
 require_relative 'stage_3'
+require_relative 'stage_4'
+# require_relative 'stage_5'
+# require_relative 'stage_6'
 
 class TryOpal
   class Editor
@@ -20,6 +23,10 @@ class TryOpal
     def value
       `#@native.getValue()`
     end
+
+    def setHeight(height)
+      `#@native.setSize(null,height)`
+    end
   end
 
   def self.instance
@@ -31,6 +38,8 @@ class TryOpal
 
     @output = Editor.new :output, lineNumbers: false, mode: 'text', readOnly: true
     @viewer = Editor.new :viewer, lineNumbers: false, mode: 'ruby', readOnly: true, theme: 'tomorrow-night-eighties'
+    # Element.find('#viewer').css('height', '200px' )
+    @viewer.setHeight(100);
     @editor = Editor.new :editor, lineNumbers: true, mode: 'ruby', tabMode: 'shift', theme: 'tomorrow-night-eighties', extraKeys: {
       'Cmd-Enter' => -> { run_code }
     }

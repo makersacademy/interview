@@ -16,3 +16,5 @@
 Gemfile.lock
 .DS_Store
 /tmp
+
+bower_components/**/*
