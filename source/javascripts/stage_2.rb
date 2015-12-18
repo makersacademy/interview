@@ -8,7 +8,11 @@ puts "Hello \#{upper(name)}"
   def code
     <<-TEST
 puts "Hello \#{upper(name)}"
-upper('asdf') == 'ASDF'
+if upper('asdf') == 'ASDF'
+  true
+else
+  puts "please ensure your `upper` method converts a string to all upper case."
+end
     TEST
   end
 
@@ -17,7 +21,7 @@ upper('asdf') == 'ASDF'
 Well done!</br></br>
 Now please implement a method called upper that will make a string in all capitals
     INSTR
-  end  
+  end
 
   def next_stage
     Stage3.new

@@ -8,13 +8,17 @@ puts "Hello \#{name}"
   def code
     <<-TEST
 puts "Hello \#{name}"
-name =~ /[a-zA-Z]+/
+if name =~ /[a-zA-Z]+/
+  true
+else
+  puts "please ensure you assign your name to the variable `name`"
+end
     TEST
   end
 
   def instructions
     <<-INSTR
-please make this code run by assigning a string of your name to the variable 'name'
+please make this code run by assigning a string of your name to the variable `name`
     INSTR
   end
 
