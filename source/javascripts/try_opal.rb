@@ -2,25 +2,9 @@ require 'opal'
 require 'opal-parser'
 require 'opal-jquery'
 
-DEFAULT_TRY_CODE = '# your code here'
-
-DEFAULT_TRY_CODE_OLD = <<-RUBY
-class User
-  attr_accessor :name
-
-  def initialize(name)
-    @name = name
-  end
-
-  def admin?
-    @name == 'Admin'
-  end
-end
-
-user = User.new('Bob')
-puts user
-puts user.admin?
-RUBY
+require_relative 'default_try_code'
+require_relative 'stage_1'
+require_relative 'stage_2'
 
 class TryOpal
   class Editor
@@ -41,11 +25,20 @@ class TryOpal
     @instance ||= self.new
   end
 
+  class << self
+    attr_accessor :stage
+
+    def stage
+      @stage ||= Stage1.new
+    end
+  end
+
   def initialize
     @flush = []
 
     @output = Editor.new :output, lineNumbers: false, mode: 'text', readOnly: true
-    @viewer = Editor.new :viewer, lineNumbers: true, mode: 'javascript', readOnly: true, theme: 'tomorrow-night-eighties'
+    @viewer = Editor.new :viewer, lineNumbers: false, mode: 'ruby', readOnly: true, theme: 'tomorrow-night-eighties'
+    @viewer.value = TryOpal.stage.display_code
     @editor = Editor.new :editor, lineNumbers: true, mode: 'ruby', tabMode: 'shift', theme: 'tomorrow-night-eighties', extraKeys: {
       'Cmd-Enter' => -> { run_code }
     }
@@ -62,6 +55,11 @@ class TryOpal
     end
   end
 
+  def begin_stage(stage)
+    @viewer.value = stage.display_code
+    TryOpal.stage = stage
+  end
+
   def run_code
     @flush = []
     @output.value = ''
@@ -69,9 +67,11 @@ class TryOpal
     @link[:href] = "?code:#{`encodeURIComponent(#{@editor.value})`}"
 
     begin
-      code = Opal.compile(@editor.value, :source_map_enabled => false)
-      @viewer.value = code
-      eval_code code
+      ruby_code = @editor.value + "\n" + stage.code
+      code = Opal.compile(ruby_code, :source_map_enabled => false)
+      if eval_code code
+        begin_stage stage.next_stage
+      end
     rescue => err
       log_error err
     end
@@ -89,13 +89,17 @@ class TryOpal
     @flush << str
     @output.value = @flush.join('')
   end
+
+  def stage
+    TryOpal.stage
+  end
 end
 
 Document.ready? do
   $stdout.write_proc = $stderr.write_proc = proc do |str|
     TryOpal.instance.print_to_output(str)
     ycbm = Element.find('#youcanbookme')
-    ycbm.css('display', str.include?('john') ? 'block' : 'none') 
+    ycbm.css('display', str.include?('john') ? 'block' : 'none')
   end
-  TryOpal.instance.run_code
+  TryOpal.instance
 end
