@@ -1,4 +1,4 @@
-class Stage1
+class Stage2
   def display_code
     <<-CODE
 puts "Hello \#{upper(name)}"

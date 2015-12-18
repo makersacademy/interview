@@ -25,46 +25,30 @@ class TryOpal
     @instance ||= self.new
   end
 
-  class << self
-    attr_accessor :stage
-
-    def stage
-      @stage ||= Stage1.new
-    end
-  end
-
   def initialize
     @flush = []
 
     @output = Editor.new :output, lineNumbers: false, mode: 'text', readOnly: true
     @viewer = Editor.new :viewer, lineNumbers: false, mode: 'ruby', readOnly: true, theme: 'tomorrow-night-eighties'
-    @viewer.value = TryOpal.stage.display_code
     @editor = Editor.new :editor, lineNumbers: true, mode: 'ruby', tabMode: 'shift', theme: 'tomorrow-night-eighties', extraKeys: {
       'Cmd-Enter' => -> { run_code }
     }
 
-    @link = Element.find('#link_code')
     Element.find('#run_code').on(:click) { run_code }
 
-    hash = `decodeURIComponent(location.hash || location.search)`
+    @editor.value = DEFAULT_TRY_CODE.strip
 
-    if hash =~ /^[#?]code:/
-      @editor.value = hash[6..-1]
-    else
-      @editor.value = DEFAULT_TRY_CODE.strip
-    end
+    begin_stage Stage1.new
   end
 
   def begin_stage(stage)
     @viewer.value = stage.display_code
-    TryOpal.stage = stage
+    @stage = stage
   end
 
   def run_code
     @flush = []
     @output.value = ''
-
-    @link[:href] = "?code:#{`encodeURIComponent(#{@editor.value})`}"
 
     begin
       ruby_code = @editor.value + "\n" + stage.code
@@ -91,7 +75,7 @@ class TryOpal
   end
 
   def stage
-    TryOpal.stage
+    @stage
   end
 end
 
