@@ -19,7 +19,7 @@ end
 if result.count('Nikesh') > 0 and result.count(name) > 0
   true
 else
-  puts "please ensure your `random_name` returns your name or Nikesh's randomly."
+  puts "please ensure your `random_name` returns your name or "Nikesh" randomly."
 end
     TEST
   end
@@ -27,7 +27,7 @@ end
   def instructions
     <<-INSTR
 Well done!</br></br>
-Now please implement a method called `random_name` that will output either Nikesh or your name at random.  Do not delete the previous methods.
+Now please implement a method called `random_name` that will output either the string "Nikesh" or the value of `name` at random.  Do not delete the previous methods.
     INSTR
   end
 

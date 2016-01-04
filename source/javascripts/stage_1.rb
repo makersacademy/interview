@@ -18,7 +18,7 @@ end
 
   def instructions
     <<-INSTR
-please make this code run by assigning a string of your name to the variable `name`
+Please make this code run correctly by assigning a string value (use your own name) to the variable `name`
     INSTR
   end
 

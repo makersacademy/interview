@@ -5,7 +5,7 @@ puts "Hello \#{upper(name)}"
 puts "Hello \#{lower(name)}"
 puts "Hello \#{random_name}"
 puts "Hello \#{random_case(name)}"
-puts "Hello \#{random_both(name)}"
+puts "Hello \#{random_both}"
     CODE
   end
 

@@ -20,7 +20,7 @@ end
 if result.count('JOHN') > 0 and result.count('john') > 0
   true
 else
-  puts "please ensure your `random_case` returns either upper case or lower case randomly."
+  puts "please ensure your `random_case` method returns either upper case or lower case randomly."
 end
     TEST
   end
@@ -28,7 +28,7 @@ end
   def instructions
     <<-INSTR
 Well done!</br></br>
-Now please implement a method called `random_case(name)` that will return a lower or upper case version of a name at random.  Do not delete the previous methods.
+Now please implement a method called `random_case` that will return a lower or upper case version of a string at random.  Do not delete the previous methods.
     INSTR
   end
 

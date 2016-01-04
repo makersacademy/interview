@@ -19,7 +19,7 @@ end
   def instructions
     <<-INSTR
 Well done!</br></br>
-Now please implement a method called upper that will make a string in all capitals
+Now please implement a method called upper that will return a given string in all capitals
     INSTR
   end
 
