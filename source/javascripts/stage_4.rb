@@ -19,7 +19,7 @@ end
 if result.count('Nikesh') > 0 and result.count(name) > 0
   true
 else
-  puts "please ensure your `random_name` returns your name or "Nikesh" randomly."
+  puts 'please ensure your `random_name` returns your name or "Nikesh" randomly.'
 end
     TEST
   end
