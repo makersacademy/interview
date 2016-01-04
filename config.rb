@@ -16,6 +16,9 @@ activate :blog do |blog|
   blog.prefix = "blog"
 end
 
+activate :relative_assets
+set :relative_links, true
+
 activate :directory_indexes
 
 set :css_dir, 'stylesheets'
